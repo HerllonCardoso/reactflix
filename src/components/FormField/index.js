@@ -1,8 +1,13 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-console */
+// eslint-disable-next-line linebreak-style
+/* eslint-disable func-names */
+/* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
 /* eslint-disable linebreak-style */
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const FormFieldWrapper = styled.div`
    position: relative;
@@ -56,9 +61,19 @@ const Input = styled.input`
   &:focus {
     border-bottom-color: var(--primary);
   }
-  &:focus:not([type='color']) + ${Label.Text} {
+  &:focus:not([type='color']) + span {
     transform: scale(.6) translateY(-10px);
   }
+
+  /* ANIMATION DO CSS NO FORM CADASTRO DE CAT */
+  ${({ value }) => {
+    const hasValue = value.length > 0;
+    return hasValue && css`
+        &:not([type='color']) + ${Label.Text} {
+          transform: scale(.6) translateY(-10px);
+        }
+      `;
+  }}
 `;
 
 function FormField({
@@ -66,6 +81,7 @@ function FormField({
 }) {
   const fieldId = `id_${name}`;
   const tag = type === 'textarea' ? 'textarea' : 'input';
+  const hasValue = Boolean(value.length);
 
   return (
     <FormFieldWrapper>
